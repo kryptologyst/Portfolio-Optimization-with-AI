@@ -1,0 +1,85 @@
+# Optimization Configuration
+optimization:
+  # Genetic Algorithm
+  genetic_algorithm:
+    population_size: 100
+    generations: 200
+    mutation_rate: 0.1
+    crossover_rate: 0.8
+    selection_method: "tournament"  # tournament, roulette, rank
+    tournament_size: 5
+    elite_size: 10
+    fitness_function: "sharpe_ratio"  # sharpe_ratio, sortino_ratio, calmar_ratio
+  
+  # Mean-Variance Optimization
+  mean_variance:
+    risk_aversion: 1.0
+    constraints:
+      max_weight: 0.4
+      min_weight: 0.0
+      long_only: true
+    solver: "cvxpy"  # cvxpy, scipy
+  
+  # Risk Parity
+  risk_parity:
+    target_risk: 0.15  # 15% target volatility
+    max_iterations: 1000
+    tolerance: 1e-6
+  
+  # Black-Litterman
+  black_litterman:
+    tau: 0.05  # scaling factor
+    confidence_level: 0.5
+    views: []  # market views
+  
+  # Machine Learning Models
+  ml_models:
+    xgboost:
+      n_estimators: 100
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+      colsample_bytree: 0.8
+      random_state: 42
+    
+    lightgbm:
+      n_estimators: 100
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+      colsample_bytree: 0.8
+      random_state: 42
+    
+    linear_regression:
+      fit_intercept: true
+      normalize: false
+  
+  # Ensemble methods
+  ensemble:
+    methods: ["xgboost", "lightgbm", "linear_regression"]
+    weights: [0.4, 0.4, 0.2]
+    voting_method: "weighted"  # weighted, soft
+
+# Portfolio constraints
+constraints:
+  # Weight constraints
+  max_weight_per_asset: 0.4
+  min_weight_per_asset: 0.0
+  max_sector_weight: 0.6
+  max_country_weight: 0.8
+  
+  # Risk constraints
+  max_portfolio_volatility: 0.25
+  max_drawdown: 0.15
+  max_var_95: 0.05
+  
+  # Transaction constraints
+  max_turnover: 0.5
+  transaction_cost: 0.001  # 10 bps
+  min_trade_size: 0.01
+
+# Rebalancing
+rebalancing:
+  frequency: "monthly"  # daily, weekly, monthly, quarterly
+  threshold: 0.05  # rebalance if drift exceeds 5%
+  method: "calendar"  # calendar, threshold, optimal

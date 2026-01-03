@@ -1,0 +1,81 @@
+# Risk Management Configuration
+risk:
+  # Value at Risk (VaR)
+  var:
+    confidence_levels: [0.95, 0.99]
+    methods: ["historical", "parametric", "monte_carlo"]
+    lookback_window: 252  # days
+    monte_carlo_simulations: 10000
+  
+  # Conditional Value at Risk (CVaR)
+  cvar:
+    confidence_levels: [0.95, 0.99]
+    methods: ["historical", "parametric"]
+  
+  # Drawdown Analysis
+  drawdown:
+    max_drawdown_limit: 0.15
+    drawdown_window: 252
+    recovery_threshold: 0.95
+  
+  # Stress Testing
+  stress_testing:
+    scenarios:
+      market_crash: -0.2  # -20% market decline
+      volatility_spike: 0.5  # 50% volatility increase
+      correlation_breakdown: 0.8  # correlation increases to 0.8
+      liquidity_crisis: -0.1  # -10% liquidity impact
+    
+    shock_magnitudes: [0.5, 1.0, 1.5, 2.0]  # multiples of historical shocks
+  
+  # Risk Budgeting
+  risk_budgeting:
+    method: "equal_risk_contribution"  # equal_risk_contribution, risk_parity
+    target_risk_contributions: {}  # asset-specific targets
+    rebalance_threshold: 0.05
+  
+  # Risk Models
+  risk_models:
+    # Factor models
+    factor_model:
+      factors: ["market", "size", "value", "momentum", "quality"]
+      lookback_window: 252
+      rebalance_frequency: "monthly"
+    
+    # GARCH models
+    garch:
+      model: "GARCH"  # GARCH, EGARCH, GJR-GARCH
+      p: 1
+      q: 1
+      distribution: "normal"  # normal, t, skewed_t
+  
+  # Risk Limits
+  limits:
+    # Portfolio level
+    max_portfolio_var: 0.05
+    max_portfolio_cvar: 0.08
+    max_portfolio_volatility: 0.25
+    max_portfolio_drawdown: 0.15
+    
+    # Asset level
+    max_asset_weight: 0.4
+    max_asset_var_contribution: 0.02
+    max_asset_correlation: 0.8
+    
+    # Sector level
+    max_sector_weight: 0.6
+    max_sector_var_contribution: 0.03
+  
+  # Risk Monitoring
+  monitoring:
+    frequency: "daily"
+    alerts:
+      var_breach: true
+      drawdown_breach: true
+      correlation_spike: true
+      volatility_spike: true
+    
+    reporting:
+      risk_dashboard: true
+      risk_report: "weekly"
+      stress_test_report: "monthly"
